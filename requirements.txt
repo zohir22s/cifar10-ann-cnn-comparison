@@ -1,15 +1,20 @@
-torch==2.2.0
-torchvision==0.17.1
-torchaudio==2.2.0
+# core PyTorch libraries for deep learning
+torch==2.2.0          # main PyTorch library
+torchvision==0.17.1   # Utilities for image datasets and transforms
 
-numpy==1.26.0
-pandas==2.1.1
+#data handling and analysis
+numpy==1.26.0          # for numerical computations
+pandas==2.1.1          # for data manipulation and CSV handling
 
-matplotlib==3.8.0
-seaborn==0.12.3
+#visualization
+matplotlib==3.8.0      # [lotting library for graphs and curves
+seaborn==0.12.3        # High-level statistical plotting (nicer than matplotlib)
 
-tqdm==4.66.1
+# progress bars
+tqdm==4.66.1           # Shows progress bars during training loops (good for evaluating training time)
 
-notebook==7.3.3
+# Jupyter notebooks
+notebook==7.3.3        # To run interactive notebooks (.ipynb files)
 
-pickle5==0.0.12
+# Optional: saving/loading Python objects
+pickle5==0.0.12        # Advanced pickle for serializing objects (datasets, models)
