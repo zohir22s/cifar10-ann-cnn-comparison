@@ -1,39 +1,25 @@
-# data/load_data.py
-import os
+# load_data.py
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
-
-# dataset directory
-DATA_DIR = "data/raw"
-
-# create folder if it doesn't exist
-os.makedirs(DATA_DIR, exist_ok=True)
-
-# Define transformations
+# Define transformations for the dataset
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))
 ])
-
-# check if dataset already exists
-dataset_exists = os.path.exists(os.path.join(DATA_DIR, "cifar-10-batches-py"))
-
-# Load datasets (download only if missing)
+# Load the CIFAR-10 dataset from data/raw directory
 train_dataset = torchvision.datasets.CIFAR10(
-    root=DATA_DIR,
+    root="data/raw",   
     train=True,
-    download=not dataset_exists,
+    download=True,    
     transform=transform
 )
-
 test_dataset = torchvision.datasets.CIFAR10(
-    root=DATA_DIR,
+    root="data/raw",
     train=False,
-    download=not dataset_exists,
+    download=True,
     transform=transform
 )
-
-# DataLoaders
+# Create DataLoaders for training and testing
 train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
 test_loader = DataLoader(test_dataset, batch_size=64)
