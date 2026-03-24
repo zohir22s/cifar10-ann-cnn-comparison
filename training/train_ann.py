@@ -1,4 +1,3 @@
-import argparse
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -6,31 +5,20 @@ import torch.optim as optim
 from models.ann_model import ANN
 from data.load_data import train_loader, test_loader
 
-# Command-line arguments
-parser = argparse.ArgumentParser(description="Train ANN on CIFAR-10")
-parser.add_argument(
-    "--epoch",
-    type=int,
-    default=10,  # default to 10 epochs
-    help="Number of epochs to train (default: 10)"
-)
-args = parser.parse_args()
-epochs = args.epoch
-
-
-# Device configuration
+# Device (GPU if available)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Using device:", device)
-print(f"Training for {epochs} epochs")
 
-
-# Model, loss, optimizer
+# Initialize model
 model = ANN().to(device)
+
+# Loss and optimizer
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
+# Training parameters
+epochs = 20
 
-# Training loop
 train_losses = []
 test_accuracies = []
 
@@ -52,8 +40,7 @@ for epoch in range(epochs):
     avg_loss = running_loss / len(train_loader)
     train_losses.append(avg_loss)
 
-
-    # Evaluation
+    # Evaluate
     model.eval()
     correct = 0
     total = 0
@@ -62,7 +49,9 @@ for epoch in range(epochs):
         for images, labels in test_loader:
             images, labels = images.to(device), labels.to(device)
             outputs = model(images)
+
             _, predicted = torch.max(outputs, 1)
+
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
 
@@ -73,4 +62,5 @@ for epoch in range(epochs):
 
 # Save model
 model.save("results/models/ann.pth")
-print("Training finished. Model saved to results/models/ann.pth")
+
+print("Training finished.")
