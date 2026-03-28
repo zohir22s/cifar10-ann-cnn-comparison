@@ -14,13 +14,17 @@ model = ANN().to(device)
 
 # Loss and optimizer
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.0005, weight_decay=1e-4)
 
 # Training parameters
-epochs = 20
+epochs = 50
+patience = 5
 
 train_losses = []
 test_accuracies = []
+
+best_acc = 0
+counter = 0
 
 for epoch in range(epochs):
     model.train()
@@ -35,9 +39,9 @@ for epoch in range(epochs):
         loss.backward()
         optimizer.step()
 
-        running_loss += loss.item()
+        running_loss += loss.item() * images.size(0)
 
-    avg_loss = running_loss / len(train_loader)
+    avg_loss = running_loss / len(train_loader.dataset)
     train_losses.append(avg_loss)
 
     # Evaluate
@@ -60,7 +64,21 @@ for epoch in range(epochs):
 
     print(f"Epoch [{epoch+1}/{epochs}] Loss: {avg_loss:.4f} Accuracy: {accuracy:.2f}%")
 
-# Save model
-model.save("results/models/ann.pth")
+    # Early stopping + save best model
+    if accuracy > best_acc:
+        best_acc = accuracy
+        counter = 0
+        model.save("results/models/ann_best.pth")
+    else:
+        counter += 1
+
+    if counter >= patience:
+        print("Early stopping triggered.")
+        break
+
+print(f"Best Accuracy: {best_acc:.2f}%")
+
+# Save last model (optional but useful)
+model.save("results/models/ann_last.pth")
 
 print("Training finished.")
