@@ -32,7 +32,6 @@ test_loader = DataLoader(test_dataset, batch_size=64)
 noise_transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Lambda(lambda x: x + 0.1*torch.randn_like(x)),  # small Gaussian noise
-    transforms.Clamp(0.0,1.0),  # make sure pixels stay between 0 and 1
     transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))
 ])
 
