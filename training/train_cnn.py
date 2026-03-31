@@ -11,7 +11,6 @@ Responsibilities:
   4. Save learning curves and results plots
 =============================================================
 """
-
 import os
 import sys
 import numpy as np
