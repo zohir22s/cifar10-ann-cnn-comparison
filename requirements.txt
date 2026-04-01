@@ -18,3 +18,11 @@ notebook        # To run interactive notebooks (.ipynb files)
 
 # Optional: saving/loading Python objects
 pickle5        # Advanced pickle for serializing objects (datasets, models)
+
+# For Keras / TensorFlow CNN
+tensorflow          # For building/training Keras CNNs
+keras               # optional, if using standalone Keras
+
+# For metrics and evaluation
+scikit-learn        # confusion_matrix, classification_report, train_test_split
+
