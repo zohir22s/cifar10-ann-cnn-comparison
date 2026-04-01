@@ -46,28 +46,8 @@ The project uses the [CIFAR-10 dataset](https://www.cs.toronto.edu/~kriz/cifar.h
 
 ## Requirements
 
-```text
-# Core PyTorch and TensorFlow libraries
-torch
-torchvision
-tensorflow
-keras
+Install all required Python packages using:
 
-# Data handling and analysis
-numpy
-pandas
-scikit-learn
+```bash
+pip install -r requirements.txt
 
-# Visualization
-matplotlib
-seaborn
-plotly
-
-# Progress bars
-tqdm
-
-# Jupyter notebooks
-notebook
-
-# Optional: saving/loading Python objects
-pickle5
