@@ -2,8 +2,9 @@
 
 [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/pytorch-2.1-red.svg)](https://pytorch.org/)
+[![TensorFlow](https://img.shields.io/badge/tensorflow-2.14-orange.svg)](https://www.tensorflow.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Notebook](https://img.shields.io/badge/notebook-ready-orange.svg)](https://colab.research.google.com/github/zohir22s/cifar10-ann-cnn-comparison)
+[![Notebook](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zohir22s/cifar10-ann-cnn-comparison)
 
 This repository contains implementations of **ANN**, **CNN**, and **Advanced CNN** for image classification on the **CIFAR-10 dataset**. It provides training scripts, evaluation tools, metrics, and notebooks for analysis and comparison.
 
@@ -27,9 +28,46 @@ The project uses the [CIFAR-10 dataset](https://www.cs.toronto.edu/~kriz/cifar.h
 
 ## Models
 
-- **ANN** – Simple fully connected network (PyTorch)  
-- **CNN** – Intermediate convolutional network (TensorFlow/Keras)  
-- **Advanced CNN** – PyTorch CNN with data augmentation, dropout, and learning rate scheduling  
+### ANN (Artificial Neural Network) — PyTorch
+A simple feedforward neural network for CIFAR-10 classification:
+
+- **Input:** 32 × 32 × 3 images, flattened to a 3072-element vector  
+- **Architecture:**  
+  - Dense(3072 → 1024) + ReLU  
+  - Dense(1024 → 512) + ReLU  
+  - Dense(512 → 256) + ReLU  
+  - Dense(256 → 10) (output logits)  
+- **Features:** Fully connected, no convolution, trained on raw pixels.  
+
+---
+
+### CNN (Convolutional Neural Network) — TensorFlow/Keras
+An intermediate convolutional model to capture spatial features:
+
+- **Input:** 32 × 32 × 3 images  
+- **Architecture:**  
+  - **Block 1:** Conv2D(32) → Conv2D(32) → MaxPool(2×2) → Dropout(0.25)  
+  - **Block 2:** Conv2D(64) → Conv2D(64) → MaxPool(2×2) → Dropout(0.25)  
+  - **Classifier Head:** Flatten → Dense(512, ReLU) → Dropout(0.5) → Dense(10, Softmax)  
+- **Features:** Convolutional layers extract spatial features; dropout prevents overfitting.  
+
+---
+
+### Advanced CNN — PyTorch
+A deeper CNN with residual connections and regularization:
+
+- **Input:** 32 × 32 × 3 images  
+- **Architecture:**  
+  - **Stem:** Conv2D(3 → 64) + BatchNorm + ReLU  
+  - **Residual Blocks:**  
+    - Block1: 64 → 128, stride=2  
+    - Block2: 128 → 256, stride=2  
+    - Block3: 256 → 512, stride=2  
+  - Global Average Pooling → Dropout(0.4) → Dense(10)  
+- **Features:**  
+  - Residual skip connections improve gradient flow  
+  - Batch normalization and dropout for better generalization  
+  - Designed for higher accuracy on CIFAR-10  
 
 ---
 
@@ -50,4 +88,3 @@ Install all required Python packages using:
 
 ```bash
 pip install -r requirements.txt
-
